@@ -1,42 +1,46 @@
 import React,  { useState } from "react";
-import BackButton from "/components/BackButton";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import axios from "axios";
 
 
 const CreateExercise = () => {
   const [exercises, setExercises] = useState([]);
   const [template, setTemplate] = useState('');
-  const [exercisesName, setExercisesName] = useState('');
-  // const navigate = useNavigate();
+  const [exerciseName, setExercisesName] = useState('');
+  const navigate = useNavigate();
 
   const handleSaveExercise = () => {
-    setExercises(prev => [...prev, {name: exercisesName}]);
-    setExercisesName('');
-  }
-
-  const handleSaveToBackend = () => {
-    if(!template || exercises.length === 0){
+    setExercises((prev) => [...prev,  exerciseName]);
+    setExercisesName('')
+    if(!template || exerciseName.length === 0){
       alert("Please fill all the inputs");
       return;
     }
+  
+  }
+
+  const saveToBackend = () => {
     const data = {
       template, 
-      exercises,
+      exercises
     };
+    
     axios.post('http://localhost:5000/exercises', data) 
     // axios takes 2 parameters: 1) the endpoint that I send the request, 2) the body of the request - what I want to send to the server
         .then((res) => {
+          setExercises(res.data.data)
           alert('Exercise added')
           console.log(res.data)
         })
-        // .then(() => {
-        //   navigate('/');
-        // })
+        .then(() => {
+          navigate('/');
+        })
         .catch((error) => {
           alert("Fill all forms", error)
         });
   }
+    
 
   return (
     <>
@@ -48,7 +52,7 @@ const CreateExercise = () => {
         />
         <input className="bg-blue-200"
          placeholder="Name"
-         value={exercisesName}
+         value={exerciseName}
          onChange={(e) => setExercisesName(e.target.value)}
         />
         <button
@@ -57,19 +61,16 @@ const CreateExercise = () => {
         >
           Add exercise
         </button>
+        <div></div>
         <button 
             className="border-2 border-blue-500 mx-2 px-5 cursor-pointer"
-            onClick={handleSaveToBackend}
+            onClick={saveToBackend}
         > Save</button>
-      </div>
-      <div className="flex flex-col  w-[500px]">
-        
-      </div>
-      <Link to={"/"}>
-        <div className="flex justify-center">
+        <Link to={"/"}>
+        <div className="">
           <div>
             {exercises.map((ex, index) => (
-              <li key={index}>{ex.name}</li>
+              <li key={index}>{ex}</li>
             ))}
           </div>
           <button className="bg-amber-300 border-2 px-10 cursor-pointer">
@@ -77,6 +78,10 @@ const CreateExercise = () => {
           </button>
         </div>
       </Link>
+      </div>
+     
+
+      
     </>
   );
 };

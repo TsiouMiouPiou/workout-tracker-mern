@@ -70,3 +70,19 @@ export const deleteExercise = async (req, res) => {
         res.status(500).json({success: false, msg: "Server Error", error});
      }
 }
+
+// DELETE ALL EXERCISES
+
+export const deleteAllExercises = async (req, res) => {
+    try {
+        const deleteAll = await Gym.deleteMany({})
+        res.status(200).json({success: true,
+                             msg: "All exercises are deleted!",
+                             deletedCount: deleteAll.deletedCount,
+                            }, 
+                             deleteAll)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({success: false, msg: "There is an error!"});
+    }
+}
