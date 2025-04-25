@@ -49,7 +49,7 @@ const handleSave = () =>{
           .put(`http://localhost:5000/exercises/${id}`, newData)
           .then(() =>{
             alert("Exercise has been succesfully saved")
-            navigate('/');
+            
           })
           .catch((error) =>{
             console.log(error);
@@ -94,7 +94,6 @@ const handleSave = () =>{
                                   onClick={handleSave}>
                             Save</button>
                   </div>
-                  
                 )}
         </div>
     </>
