@@ -71,7 +71,7 @@ const handleSave = () =>{
               <h1 className='text-center text-3xl text-amber-400 '>Edit Template: {template}</h1>
                 <ul className=' justify-between items-center '>
                   {exercises.map((ex, index) => (
-                   <li className='flex justify-between border-1 my-5 py-2 px-3 rounded-xl'>
+                   <li key={index} className='flex justify-between border-1 my-5 py-2 px-3 rounded-xl'>
                     <span className='text-xl'>{ex}</span>
                     <button 
                             className='bg-yellow-400 px-3 py-1 rounded hover:bg-yellow-500'

@@ -54,7 +54,7 @@ const Home = () => {
                     </li>
                   ))}
                   </ol>
-                    <div className='flex justify-center text-3xl gap-5'>
+                    <div className='flex justify-center text-3xl gap-5 pb-5'>
                       <Link to={`/edit/${exercise._id}`}><MdEdit className='text-gray-400'/></Link>
                       <Link to={`/add/${exercise._id}`}><IoMdAddCircleOutline className='text-blue-400'/></Link>
                       <Link to={`/delete/${exercise._id}`}><MdDeleteForever className='text-red-400'/></Link>
