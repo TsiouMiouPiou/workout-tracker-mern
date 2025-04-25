@@ -2,7 +2,7 @@ import React,  { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate  } from "react-router-dom";
 import axios from "axios";
-
+import BackButton from "./components/BackButton";
 
 const CreateExercise = () => {
   const [exercises, setExercises] = useState([]);
@@ -17,7 +17,6 @@ const CreateExercise = () => {
       alert("Please fill all the inputs");
       return;
     }
-  
   }
 
   const saveToBackend = () => {
@@ -26,8 +25,8 @@ const CreateExercise = () => {
       exercises
     };
     
-    axios.post('http://localhost:5000/exercises', data) 
-    // axios takes 2 parameters: 1) the endpoint that I send the request, 2) the body of the request - what I want to send to the server
+    axios
+        .post('http://localhost:5000/exercises', data)     // axios takes 2 parameters: 1) the endpoint that I send the request, 2) the body of the request - what I want to send to the server
         .then((res) => {
           setExercises(res.data.data)
           alert('Exercise added')
@@ -44,6 +43,9 @@ const CreateExercise = () => {
 
   return (
     <>
+    <div>
+      <BackButton/>
+    </div>
       <div className="flex justify-center my-10 px-10">
         <input className="bg-blue-200 mx-5"
          placeholder="Template"
@@ -73,9 +75,6 @@ const CreateExercise = () => {
               <li key={index}>{ex}</li>
             ))}
           </div>
-          <button className="bg-amber-300 border-2 px-10 cursor-pointer">
-            Home
-          </button>
         </div>
       </Link>
       </div>

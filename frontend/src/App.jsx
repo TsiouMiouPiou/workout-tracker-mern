@@ -1,16 +1,21 @@
 import './index.css'
 import Home from './pages/Home'
-import CreateExercise from './pages/CreateExercise';
+import CreateTemplate from './pages/CreateTemplate';
 import {Routes, Route} from 'react-router-dom';
-import { useState } from 'react';
-
+import DeleteExercise from './pages/DeleteExercise';
+import AddExercise from './pages/AddExercise';
+import EditExercise from './pages/EditExercise';
+import DeleteAllExercises from './pages/DeleteAllExercises';
 function App() {
-  const [exercise, setExercise] = useState([]);
 
   return (
     <Routes>
-      <Route path='/' element={<Home exercise={exercise}/>}/>
-      <Route path='/create' element={<CreateExercise exercise={exercise} setExercise={setExercise}/>}/>
+      <Route path='/' element={<Home/>}/>
+      <Route path='/create' element={<CreateTemplate/>}/>
+      <Route path='/edit/:id' element={<EditExercise/>}/>
+      <Route path='/add/:id' element={<AddExercise/>}/>
+      <Route path='/delete/:id' element={<DeleteExercise/>}/>
+      <Route path='/deleteAll/:id' element={<DeleteAllExercises/>}/>
     </Routes>
   )
 }
