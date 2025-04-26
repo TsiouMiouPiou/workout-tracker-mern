@@ -100,7 +100,7 @@ export const deleteExercise = async (req, res) => {
         const exercises = req.body
        
         const deletedExercise = await Gym.findByIdAndDelete(id);
-        res.status(200).json({success: true, msg: "Exersice is deleted", exercises})
+        res.status(200).json({success: true, msg: "Exersice is deleted", deleteAllExercises})
         console.log(deletedExercise);
             
      } catch (error) {

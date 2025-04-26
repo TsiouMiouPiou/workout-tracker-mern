@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "./components/BackButton";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { IoIosRemoveCircle } from "react-icons/io";
+
 
 const AddExercise = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [exercises, setExercises] = useState([]);
+  const [template, setTemplate] = useState('');
   const [newExercise, setNewExercise] = useState("");
+
+  useEffect(() => {
+    axios
+        .get(`http://localhost:5000/exercises/${id}`)
+        .then((res) => {
+          setTemplate(res.data.data.template)
+        })
+  })
 
   const handleExercise = () => {
     setExercises((prev) => [...prev, newExercise]);
     setNewExercise("");
   };
 
+  const handleRemove = (removedElement) => {
+     setExercises(exercises.filter(i => i !== removedElement))
+     // filter() runs all the elements and keeps all i except removedElement
+  }
+
   const handleSave = () => {
     const data = {
+      template,
       exercises: exercises,
     };
     axios
@@ -22,6 +40,7 @@ const AddExercise = () => {
       .then((res) => {
         setExercises(res.data.data.exercises);
         alert("Exercises are added");
+        navigate('/')
         console.log(data);
       })
       .catch((error) => {
@@ -44,7 +63,10 @@ const AddExercise = () => {
         <BackButton />
       </div>
       <div className="max-w-xl mx-auto border-2 p-10 rounded-2xl border-green-300 shadow-2xl">
+        <div className="flex ">
         <h1 className="text-4xl text-green-600 font-bold ">Add Exercises</h1>
+        {/* <h3 className="ml-10 text-xl">From '{template} Template' </h3> */}
+        </div>
         <div className="pt-10 flex justify-between">
           <input
             className="text-xl  border-2 rounded-xl py-1 px-3 "
@@ -60,7 +82,14 @@ const AddExercise = () => {
             Add
           </button>
         </div>
-        <div className="mt-10"></div>
+        <div className="mt-10 text-2xl  ">
+          {exercises.map((ex, index) => (
+            <div className="flex justify-between" key={index}>
+              {ex} <button onClick={() => handleRemove(ex)}><IoIosRemoveCircle className="text-red-500"/></button>
+
+            </div>
+          ))}
+        </div>
         <button
           className="mt-5 text-3xl border-1 text-center w-full bg-indigo-400"
           onClick={handleSave}

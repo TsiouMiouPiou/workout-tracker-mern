@@ -5,7 +5,7 @@ import {Routes, Route} from 'react-router-dom';
 import DeleteExercise from './pages/DeleteExercise';
 import AddExercise from './pages/AddExercise';
 import EditExercise from './pages/EditExercise';
-import DeleteAllExercises from './pages/DeleteAllExercises';
+import DeleteTemplate from './pages/DeleteTemplate';
 function App() {
 
   return (
@@ -15,7 +15,7 @@ function App() {
       <Route path='/edit/:id' element={<EditExercise/>}/>
       <Route path='/add/:id' element={<AddExercise/>}/>
       <Route path='/delete/:id' element={<DeleteExercise/>}/>
-      <Route path='/deleteAll/:id' element={<DeleteAllExercises/>}/>
+      <Route path='/deleteAll/:id' element={<DeleteTemplate/>}/>
     </Routes>
   )
 }

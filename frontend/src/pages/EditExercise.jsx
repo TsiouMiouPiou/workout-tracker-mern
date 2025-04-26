@@ -1,12 +1,12 @@
 import React from 'react'
 import BackButton from './components/BackButton';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const EditExercise = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [template, setTemplate] = useState('')
   const [exercises, setExercises] = useState([]);
   const [current, setCurrent] = useState(null);
@@ -72,6 +72,7 @@ const handleSave = () =>{
                 <ul className=' justify-between items-center '>
                   {exercises.map((ex, index) => (
                    <li key={index} className='flex justify-between border-1 my-5 py-2 px-3 rounded-xl'>
+                    {index + 1}
                     <span className='text-xl'>{ex}</span>
                     <button 
                             className='bg-yellow-400 px-3 py-1 rounded hover:bg-yellow-500'
