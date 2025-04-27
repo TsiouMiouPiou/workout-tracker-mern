@@ -11,8 +11,11 @@ const CreateExercise = () => {
   const navigate = useNavigate();
 
   const handleSaveExercise = () => {
-    if (!template || exerciseName.length === 0) {
-      alert("Please fill all the inputs");
+    if(template && !exerciseName){
+      alert("Template added")
+      setExercisesName("");
+    }else if(exercises && !template){
+      alert("Select a template")
       return;
     }
     setExercises((prev) => [...prev, exerciseName]);
@@ -24,17 +27,13 @@ const CreateExercise = () => {
       template,
       exercises,
     };
-    if(template && !exerciseName){
-      alert("Template added")
-    }else if(exercises && !template){
-      alert("Select a template")
-      return;
-    }
+   
 
 
     axios
       .post("http://localhost:5000/exercises", data) // axios takes 2 parameters: 1) the endpoint that I send the request, 2) the body of the request - what I want to send to the server
       .then((res) => {
+        setTemplate(res.data.data)
         setExercises(res.data.data);
         console.log(res.data);
       })
@@ -51,40 +50,43 @@ const CreateExercise = () => {
       <div>
         <BackButton />
       </div>
-      <div className="max-w-xl mx-auto shadow-2xl my-10 px-10">
-        <input
-          className="bg-blue-200 mx-5"
-          placeholder="Template"
-          value={template}
-          onChange={(e) => setTemplate(e.target.value)}
-        />
-        <input
-          className="bg-blue-200"
-          placeholder="Name"
-          value={exerciseName}
-          onChange={(e) => setExercisesName(e.target.value)}
-        />
-        <button
-          className="border-2 bg-amber-500 border-amber-500 mx-2 px-5 cursor-pointer"
-          onClick={handleSaveExercise}
-        >
-          Add 
-        </button>
-        <button
-          className="border-2 bg-blue-400 border-blue-500 mx-2 px-5 cursor-pointer"
-          onClick={saveToBackend}
-        >
-          {" "}
-          Save
-        </button>
+      <div className="max-w-xl mx-auto my-10 p-8 shadow-2xl rounded-2xl bg-white">
+  <div className="flex flex-col gap-4">
+    <input
+      className="bg-blue-100 rounded-lg p-3 text-lg outline-none focus:ring-2 focus:ring-blue-400"
+      placeholder="Template"
+      value={template}
+      onChange={(e) => setTemplate(e.target.value)}
+    />
+    <input
+      className="bg-blue-100 rounded-lg p-3 text-lg outline-none focus:ring-2 focus:ring-blue-400"
+      placeholder="Exercise"
+      value={exerciseName}
+      onChange={(e) => setExercisesName(e.target.value)}
+    />
+    <div className="flex justify-between">
+      <button
+        className="bg-amber-400 hover:bg-amber-500 text-white font-semibold py-2 px-6 rounded-lg cursor-pointer"
+        onClick={handleSaveExercise}
+      >
+        Add
+      </button>
+      <button
+        className="bg-blue-400 hover:bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg cursor-pointer"
+        onClick={saveToBackend}
+      >
+        Save
+      </button>
+    </div>
+  </div>
 
-        <div>
-            {exercises.map((ex, index) => (
-              <li key={index}>{ex}</li>
-            ))}
-          </div>
-        
-        </div>
+  <ul className="mt-8 list-disc list-inside space-y-2 text-lg">
+    {exercises.map((ex, index) => (
+      <li key={index}>{ex}</li>
+    ))}
+  </ul>
+</div>
+
        
     </>
   );

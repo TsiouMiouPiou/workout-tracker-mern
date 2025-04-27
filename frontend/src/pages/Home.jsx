@@ -2,8 +2,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { HiArrowNarrowDown } from "react-icons/hi";
 import { useEffect, useState } from "react";
-import { MdDeleteForever } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
+import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FcDeleteDatabase } from "react-icons/fc";
 
@@ -23,60 +22,48 @@ const Home = () => {
 
   return (
     <>
-     
-        <h1 className="text-5xl text-blue-400 my-10 pl-10">Tsiou GYM</h1>
-      <div className="flex justify-center">
-      <Link to={"/create"} className="mx-10">
-        <button className="text-3xl text-blue-500 cursor-pointer">
-          Create New Template
-        </button>
-      </Link>
+      <div className="text-center mt-10">
+        <h1 className="text-6xl font-bold text-blue-600 mb-4 drop-shadow-lg">Tsiou GYM</h1>
+        <Link to={"/create"}>
+          <button className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-full text-xl hover:bg-blue-600 transition">
+            Create New Template
+          </button>
+        </Link>
       </div>
-      <div className="flex justify-center my-10">
-        <div className="">
-          <div className="grid grid-cols-3 gap-10">
-            {exercises.map((exercise) => (
-              <div
-                className="border-2 rounded-2xl w-100  gap-10"
-                key={exercise._id}
-              >
-                {/* <h3>{exercise._id}</h3> */}
-                <h1 className="text-4xl text-green-600 text-center py-5">
-                  {exercise.template}
-                </h1>
-                <h2 className="text-xl text-amber-300 text-center py-5">
-                  {exercise._id}
-                </h2>
-                <div className="flex justify-center">
-                  <Link to={`deleteAll/${exercise._id}`} className="text-3xl">
-                    <FcDeleteDatabase />
-                  </Link>
-                </div>
-                <ol className="text-2xl my-5 mx-5 max-h-60 overflow-y-auto pr-4">
-                  {exercise.exercises.map((name, index) => (
-                    <li
-                      className="flex justify-between items-center"
-                      key={index}
-                    >
-                      {index + 1}: {name}
-                      <div className="flex gap-1 py-5 text-xl px-4"></div>
-                    </li>
-                  ))}
-                </ol>
-                <div className="flex justify-center text-3xl gap-5 pb-5">
-                  <Link to={`/edit/${exercise._id}`}>
-                    <MdEdit className="text-gray-400" />
-                  </Link>
-                  <Link to={`/add/${exercise._id}`}>
-                    <IoMdAddCircleOutline className="text-blue-400" />
-                  </Link>
-                  <Link to={`/delete/${exercise._id}`}>
-                    <MdDeleteForever className="text-red-400" />
-                  </Link>
-                </div>
+
+      <div className="flex justify-center my-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl px-6">
+          {exercises.map((exercise) => (
+            <div
+              key={exercise._id}
+              className="border-2 border-gray-300 shadow-xl rounded-3xl p-6 hover:scale-105 hover:shadow-2xl transition duration-300 bg-white"
+            >
+              <h1 className="text-3xl text-green-500 font-bold text-center mb-4">{exercise.template}</h1>
+              <div className="flex justify-center mb-4">
+                <Link to={`deleteAll/${exercise._id}`} className="text-4xl">
+                  <FcDeleteDatabase />
+                </Link>
               </div>
-            ))}
-          </div>
+              <ol className="text-lg text-gray-700 my-4 max-h-48 overflow-y-auto pr-3">
+                {exercise.exercises.map((name, index) => (
+                  <li key={index} className="flex justify-between py-1 border-b">
+                    <span>{index + 1}. {name}</span>
+                  </li>
+                ))}
+              </ol>
+              <div className="flex justify-center gap-6 text-3xl pt-6">
+                <Link to={`/edit/${exercise._id}`}>
+                  <MdEdit className="text-gray-500 hover:text-gray-700 transition" />
+                </Link>
+                <Link to={`/add/${exercise._id}`}>
+                  <IoMdAddCircleOutline className="text-blue-400 hover:text-blue-600 transition" />
+                </Link>
+                <Link to={`/delete/${exercise._id}`}>
+                  <MdDeleteForever className="text-red-400 hover:text-red-600 transition" />
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>

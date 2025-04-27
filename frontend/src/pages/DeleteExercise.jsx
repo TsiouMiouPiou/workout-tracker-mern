@@ -18,10 +18,12 @@ const DeleteExercise = () => {
     });
   }, []);
 
-  const handleSaveRemovedExercises = () => {
+  const handleSaveRemovedExercises = (index) => {
+
+    const updatedExercises = exercises.filter(i => i !== index)
     const data = {
       template,
-      exercises,
+      exercises: updatedExercises
     };
     axios
       .delete(`http://localhost:5000/exercises/${id}`, data)
@@ -32,15 +34,15 @@ const DeleteExercise = () => {
       .catch((error) => {
         console.log(error);
         alert("There is an error");
-         if (error.response) {
-          console.log("Response Data", error.response.data);
-          console.log("Status code", error.response.status);
-          console.log("Headers", error.response.headers);
-        } else if (error.request) {
-          console.log("No response received, Request was:", error.request);
-        } else {
-          console.log("Error setting up the request", error.message);
-        }
+        //  if (error.response) {
+        //   console.log("Response Data", error.response.data);
+        //   console.log("Status code", error.response.status);
+        //   console.log("Headers", error.response.headers);
+        // } else if (error.request) {
+        //   console.log("No response received, Request was:", error.request);
+        // } else {
+        //   console.log("Error setting up the request", error.message);
+        // }
        
       });
   };
@@ -53,7 +55,7 @@ const DeleteExercise = () => {
         {exercises.map((ex, index) => (
           <div className="text-2xl flex justify-between mt-10" key={index}>
             {ex}
-            <button onClick={handleSaveRemovedExercises}>
+            <button onClick={handleSaveRemovedExercises(index)}>
               <IoIosRemoveCircle className="text-red-500 text-3xl cursor-pointer" />
             </button>
           </div>

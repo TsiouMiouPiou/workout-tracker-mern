@@ -21,13 +21,17 @@ const AddExercise = () => {
   })
 
   const handleExercise = () => {
+    if(!newExercise.trim()){
+      alert("No empty values are accepted")
+      return
+    } 
     setExercises((prev) => [...prev, newExercise]);
     setNewExercise("");
   };
 
   const handleRemove = (removedElement) => {
      setExercises(exercises.filter(i => i !== removedElement))
-     // filter() runs all the elements and keeps all i except removedElement
+     // filter() runs all the elements and keeps all i(elements) except removedElement
   }
 
   const handleSave = () => {
@@ -85,13 +89,13 @@ const AddExercise = () => {
         <div className="mt-10 text-2xl  ">
           {exercises.map((ex, index) => (
             <div className="flex justify-between" key={index}>
-              {ex} <button onClick={() => handleRemove(ex)}><IoIosRemoveCircle className="text-red-500"/></button>
+              {ex} <button onClick={() => handleRemove(ex)}><IoIosRemoveCircle className="text-red-500 cursor-pointer"/></button>
 
             </div>
           ))}
         </div>
         <button
-          className="mt-5 text-3xl border-1 text-center w-full bg-indigo-400"
+          className="mt-5 text-3xl border-1 text-center w-full bg-indigo-400 cursor-pointer"
           onClick={handleSave}
         >
           Save
