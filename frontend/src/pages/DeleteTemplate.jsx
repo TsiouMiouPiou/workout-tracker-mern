@@ -28,18 +28,17 @@ const DeleteTemplate = () => {
   };
   return (
     <>
-    <BackButton />
-    <div className="flex justify-center ">
-      <button
-        className="cursor-pointer  text-3xl bg-red-600 mt-10 p-5 rounded-2xl transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
-        onClick={handleDeletetion}
-      >
-        Delete Template
-      </button>
-    </div>
+      <BackButton />
+      <div className="flex justify-center ">
+        <button
+          className="cursor-pointer  text-3xl bg-red-600 mt-10 p-5 rounded-2xl transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500"
+          onClick={handleDeletetion}
+        >
+          Delete Template
+        </button>
+      </div>
     </>
   );
 };
-
 
 export default DeleteTemplate;

@@ -4,35 +4,32 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { IoIosRemoveCircle } from "react-icons/io";
 
-
 const AddExercise = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [exercises, setExercises] = useState([]);
-  const [template, setTemplate] = useState('');
+  const [template, setTemplate] = useState("");
   const [newExercise, setNewExercise] = useState("");
 
   useEffect(() => {
-    axios
-        .get(`http://localhost:5000/exercises/${id}`)
-        .then((res) => {
-          setTemplate(res.data.data.template)
-        })
-  })
+    axios.get(`http://localhost:5000/exercises/${id}`).then((res) => {
+      setTemplate(res.data.data.template);
+    });
+  });
 
   const handleExercise = () => {
-    if(!newExercise.trim()){
-      alert("No empty values are accepted")
-      return
-    } 
+    if (!newExercise.trim()) {
+      alert("No empty values are accepted");
+      return;
+    }
     setExercises((prev) => [...prev, newExercise]);
     setNewExercise("");
   };
 
   const handleRemove = (removedElement) => {
-     setExercises(exercises.filter(i => i !== removedElement))
-     // filter() runs all the elements and keeps all i(elements) except removedElement
-  }
+    setExercises(exercises.filter((i) => i !== removedElement));
+    // filter() runs all the elements and keeps all i(elements) except removedElement
+  };
 
   const handleSave = () => {
     const data = {
@@ -44,7 +41,7 @@ const AddExercise = () => {
       .then((res) => {
         setExercises(res.data.data.exercises);
         alert("Exercises are added");
-        navigate('/')
+        navigate("/");
         console.log(data);
       })
       .catch((error) => {
@@ -68,8 +65,8 @@ const AddExercise = () => {
       </div>
       <div className="max-w-xl mx-auto border-2 p-10 rounded-2xl border-green-300 shadow-2xl">
         <div className="flex ">
-        <h1 className="text-4xl text-green-600 font-bold ">Add Exercises</h1>
-        {/* <h3 className="ml-10 text-xl">From '{template} Template' </h3> */}
+          <h1 className="text-4xl text-green-600 font-bold ">Add Exercises</h1>
+          {/* <h3 className="ml-10 text-xl">From '{template} Template' </h3> */}
         </div>
         <div className="pt-10 flex justify-between">
           <input
@@ -89,8 +86,10 @@ const AddExercise = () => {
         <div className="mt-10 text-2xl  ">
           {exercises.map((ex, index) => (
             <div className="flex justify-between" key={index}>
-              {ex} <button onClick={() => handleRemove(ex)}><IoIosRemoveCircle className="text-red-500 cursor-pointer"/></button>
-
+              {ex}{" "}
+              <button onClick={() => handleRemove(ex)}>
+                <IoIosRemoveCircle className="text-red-500 cursor-pointer" />
+              </button>
             </div>
           ))}
         </div>

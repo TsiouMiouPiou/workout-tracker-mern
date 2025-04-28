@@ -23,7 +23,9 @@ const Home = () => {
   return (
     <>
       <div className="text-center mt-10">
-        <h1 className="text-6xl font-bold text-blue-600 mb-4 drop-shadow-lg">Tsiou GYM</h1>
+        <h1 className="text-6xl font-bold text-blue-600 mb-4 drop-shadow-lg">
+          Tsiou GYM
+        </h1>
         <Link to={"/create"}>
           <button className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-full text-xl hover:bg-blue-600 transition">
             Create New Template
@@ -38,7 +40,9 @@ const Home = () => {
               key={exercise._id}
               className="border-2 border-gray-300 shadow-xl rounded-3xl p-6 hover:scale-105 hover:shadow-2xl transition duration-300 bg-white"
             >
-              <h1 className="text-3xl text-green-500 font-bold text-center mb-4">{exercise.template}</h1>
+              <h1 className="text-3xl text-green-500 font-bold text-center mb-4">
+                {exercise.template}
+              </h1>
               <div className="flex justify-center mb-4">
                 <Link to={`deleteAll/${exercise._id}`} className="text-4xl">
                   <FcDeleteDatabase />
@@ -46,8 +50,13 @@ const Home = () => {
               </div>
               <ol className="text-lg text-gray-700 my-4 max-h-48 overflow-y-auto pr-3">
                 {exercise.exercises.map((name, index) => (
-                  <li key={index} className="flex justify-between py-1 border-b">
-                    <span>{index + 1}. {name}</span>
+                  <li
+                    key={index}
+                    className="flex justify-between py-1 border-b"
+                  >
+                    <span>
+                      {index + 1}. {name}
+                    </span>
                   </li>
                 ))}
               </ol>

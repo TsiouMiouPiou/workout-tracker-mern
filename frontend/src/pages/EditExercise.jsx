@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useParams  } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import BackButton from './components/BackButton';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BackButton from "./components/BackButton";
 
 const EditExercise = () => {
   const { id } = useParams();
-  const navigate = useNavigate()
-  const [template, setTemplate] = useState('');
+  const navigate = useNavigate();
+  const [template, setTemplate] = useState("");
   const [exercises, setExercises] = useState([]);
   const [current, setCurrent] = useState(null);
-  const [newExercise, setNewExercise] = useState('');
+  const [newExercise, setNewExercise] = useState("");
   const [newTemplate, setNewTemplate] = useState();
 
   // Load from database
@@ -22,22 +22,21 @@ const EditExercise = () => {
         setExercises(res.data.data.exercises);
       })
       .catch((error) => {
-        alert('There is an error!');
+        alert("There is an error!");
         console.log(error);
       });
-  }, []);
+  }, [id]);
 
   // Handle editing exercise
   const handleEditClick = (index) => {
     setCurrent(index);
     setNewExercise(exercises[index]);
-    
   };
   // Handle template change
   const handleTemplateSave = () => {
-    if (!newTemplate.trim()) return; 
+    if (!newTemplate.trim()) return;
     setTemplate(newTemplate);
-    
+
     const updatedData = {
       template: newTemplate,
       exercises, // Retain the exercises as they are
@@ -45,8 +44,8 @@ const EditExercise = () => {
     axios
       .put(`http://localhost:5000/exercises/${id}`, updatedData)
       .then(() => {
-        alert('Exercise has been successfully saved');
-        navigate('/')
+        alert("Exercise has been successfully saved");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -68,8 +67,8 @@ const EditExercise = () => {
     axios
       .put(`http://localhost:5000/exercises/${id}`, newData)
       .then(() => {
-        alert('Exercise has been successfully saved');
-        navigate('/')
+        alert("Exercise has been successfully saved");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -82,7 +81,9 @@ const EditExercise = () => {
         <BackButton />
       </div>
       <div className="max-w-xl mx-auto p-6 mt-8 bg-white shadow-2xl rounded-xl">
-        <h1 className="text-center text-3xl text-amber-400">Edit Template: {template}</h1>
+        <h1 className="text-center text-3xl text-amber-400">
+          Edit Template: {template}
+        </h1>
 
         <div className="mt-4">
           <input
@@ -106,7 +107,9 @@ const EditExercise = () => {
               key={index}
               className="flex justify-between items-center border-b py-2"
             >
-              <span className="text-xl">{index + 1}. {ex}</span>
+              <span className="text-xl">
+                {index + 1}. {ex}
+              </span>
               <button
                 className="bg-yellow-400 hover:bg-yellow-500 px-3 py-1 rounded-xl"
                 onClick={() => handleEditClick(index)}
