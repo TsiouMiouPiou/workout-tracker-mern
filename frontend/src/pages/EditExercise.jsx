@@ -31,12 +31,26 @@ const EditExercise = () => {
   const handleEditClick = (index) => {
     setCurrent(index);
     setNewExercise(exercises[index]);
+    
   };
-
   // Handle template change
   const handleTemplateSave = () => {
-    if (!newTemplate.trim()) return;
+    if (!newTemplate.trim()) return; 
     setTemplate(newTemplate);
+    
+    const updatedData = {
+      template: newTemplate,
+      exercises, // Retain the exercises as they are
+    };
+    axios
+      .put(`http://localhost:5000/exercises/${id}`, updatedData)
+      .then(() => {
+        alert('Exercise has been successfully saved');
+        navigate('/')
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // Save changes

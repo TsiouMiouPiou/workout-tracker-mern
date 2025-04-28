@@ -7,42 +7,29 @@ import { IoIosRemoveCircle } from "react-icons/io";
 const DeleteExercise = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [template, setTemplate] = useState();
   const [exercises, setExercises] = useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:5000/exercises/${id}`)
          .then((res) => {
-          setTemplate(res.data.data.template);
           setExercises(res.data.data.exercises);
     });
-  }, []);
+  }, [id]);
 
-  const handleSaveRemovedExercises = (index) => {
-
-    const updatedExercises = exercises.filter(i => i !== index)
-    const data = {
-      template,
-      exercises: updatedExercises
-    };
+  const handleSaveRemovedExercises = (exerciseName) => {
+    
     axios
-      .delete(`http://localhost:5000/exercises/${id}`, data)
+      .patch(`http://localhost:5000/exercises/${id}`, {exerciseName})
       .then((res) => {
-        setExercises(res.data.data.exercises);
-        navigate("/");
+        const updatedExercises = res.data.data.exercises
+        setExercises(updatedExercises)
+        if(updatedExercises.length === 0){
+          navigate('/')
+        }
       })
       .catch((error) => {
         console.log(error);
         alert("There is an error");
-        //  if (error.response) {
-        //   console.log("Response Data", error.response.data);
-        //   console.log("Status code", error.response.status);
-        //   console.log("Headers", error.response.headers);
-        // } else if (error.request) {
-        //   console.log("No response received, Request was:", error.request);
-        // } else {
-        //   console.log("Error setting up the request", error.message);
-        // }
        
       });
   };
@@ -52,14 +39,18 @@ const DeleteExercise = () => {
 
       <div className="max-w-xl mx-auto p-6 mt-8 bg-white shadow-2xl rounded-xl">
         <h1 className="text-3xl text-red-500">Delete Exercises</h1>
-        {exercises.map((ex, index) => (
+       {exercises.length === 0 ? ( 
+        <p className="text-2xl ">No exercises to delete</p>
+       ) : (
+        exercises.map((ex, index) => (
           <div className="text-2xl flex justify-between mt-10" key={index}>
             {ex}
-            <button onClick={handleSaveRemovedExercises(index)}>
-              <IoIosRemoveCircle className="text-red-500 text-3xl cursor-pointer" />
+            <button onClick={() => handleSaveRemovedExercises(ex)}>
+              <IoIosRemoveCircle className="text-red-500 text-3xl cursor-pointer"/>
             </button>
           </div>
-        ))}
+        ))
+       )}
       </div>
     </>
   );

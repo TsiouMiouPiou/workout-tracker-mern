@@ -32,7 +32,7 @@ const Home = () => {
       </div>
 
       <div className="flex justify-center my-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 min-w-4xl px-6">
           {exercises.map((exercise) => (
             <div
               key={exercise._id}

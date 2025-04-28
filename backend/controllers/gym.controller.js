@@ -18,7 +18,7 @@ export const createExercise = async (req, res) => {
     }
 };
 
-// ADD EXERCISES 
+// ADD EXERCISES                                                
 export const addExercise = async (req, res) => {
     const { id } = req.params;
     const newExercises = req.body.exercises;
@@ -92,14 +92,14 @@ export const updateExercise = async (req, res) => {
     }
 };
 
-// DELETE EXERCISE
+// DELETE TEMPLATE
 
-export const deleteExercise = async (req, res) => {
+export const deleteTemplate = async (req, res) => {
     try {
         const { id }  = req.params
        
         const deletedExercise = await Gym.findByIdAndDelete(id);
-        res.status(200).json({success: true, msg: "Exersice is deleted", deleteAllExercises})
+        res.status(200).json({success: true, msg: "Exersice is deleted"})
         console.log(deletedExercise);
             
      } catch (error) {
@@ -108,18 +108,23 @@ export const deleteExercise = async (req, res) => {
      }
 }
 
-// DELETE ALL EXERCISES
+// REMOVE EXERCISE
 
-export const deleteAllExercises = async (req, res) => {
+export const removeExercise = async (req, res) => {
     try {
-        const deleteAll = await Gym.deleteMany({})
-        res.status(200).json({success: true,
-                             msg: "All exercises are deleted!",
-                             deletedCount: deleteAll.deletedCount,
-                            }, 
-                             deleteAll)
+      const { id } = req.params;
+      const { exerciseName } = req.body;
+  
+      const removedExercise = await Gym.findByIdAndUpdate(
+        id,
+        { $pull: { exercises: exerciseName } }, // $pull from exercises array
+        { new: true } // return the updated document
+      );
+  
+      res.status(200).json({ success: true, data: removedExercise });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({success: false, msg: "There is an error!"});
+      console.log(error);
+      res.status(500).json({ success: false, msg: "There is an error" });
     }
-}
+  }
+  
