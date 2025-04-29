@@ -27,7 +27,7 @@ const Home = () => {
           Tsiou GYM
         </h1>
         <Link to={"/create"}>
-          <button className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-full text-xl hover:bg-blue-600 transition">
+          <button className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-full text-xl hover:bg-blue-600 transition cursor-pointer">
             Create New Template
           </button>
         </Link>
