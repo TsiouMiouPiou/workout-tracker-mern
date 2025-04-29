@@ -71,6 +71,11 @@ const Home = () => {
                   <MdDeleteForever className="text-red-400 hover:text-red-600 transition" />
                 </Link>
               </div>
+              <div className="flex justify-center mt-5">
+                <Link to={`/startWorkout/${exercise._id}`}>
+                      <button className="text-1xl rounded-2xl px-5 py-1 cursor-pointer bg-blue-500 hover:scale-110 transition-transform duration-300">Start Workout</button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>

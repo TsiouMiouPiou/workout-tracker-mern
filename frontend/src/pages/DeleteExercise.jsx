@@ -35,7 +35,7 @@ const DeleteExercise = () => {
       <BackButton />
 
       <div className="max-w-xl mx-auto p-6 mt-8 bg-white shadow-2xl rounded-xl">
-        <h1 className="text-3xl text-red-500">Delete Exercises</h1>
+        <h1 className="text-3xl text-red-500 font-bold">Delete Exercises</h1>
         {exercises.length === 0 ? (
           <p className="text-2xl ">No exercises to delete</p>
         ) : (

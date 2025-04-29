@@ -6,6 +6,8 @@ import DeleteExercise from "./pages/DeleteExercise";
 import AddExercise from "./pages/AddExercise";
 import EditExercise from "./pages/EditExercise";
 import DeleteTemplate from "./pages/DeleteTemplate";
+import StartWorkout from "./pages/StartWorkout";
+
 function App() {
   return (
     <Routes>
@@ -15,6 +17,7 @@ function App() {
       <Route path="/add/:id" element={<AddExercise />} />
       <Route path="/delete/:id" element={<DeleteExercise />} />
       <Route path="/deleteAll/:id" element={<DeleteTemplate />} />
+      <Route path="/startWorkout/:id" element={<StartWorkout/>}/>
     </Routes>
   );
 }
