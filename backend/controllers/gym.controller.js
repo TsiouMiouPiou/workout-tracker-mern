@@ -1,12 +1,12 @@
 import Gym from '../models/gym.model.js';
 
-// SAVE EXERCISE    
+// SAVE EXERCISES    
 export const createExercise = async (req, res) => {
 
     const all = req.body;
 
     if(!all.template || !all.exercises || !all.exercises.length === 0){
-       return res.status(400).json("Send all required fields"); // return stops the execution of the rest of the code
+       return res.status(400).json("Send all required fields"); 
     }
     const newExercise = new Gym(all);
     try {    
@@ -18,7 +18,9 @@ export const createExercise = async (req, res) => {
     }
 };
 
-// ADD EXERCISES                                                
+// SAVE SETS
+
+// ADD EXERCISES 👌                                       
 export const addExercise = async (req, res) => {
     const { id } = req.params;
     const newExercises = req.body.exercises;
@@ -42,10 +44,13 @@ export const addExercise = async (req, res) => {
     }
   };
   
-// GET ALL EXERCISES
+// GET ALL EXERCISES 👌
 export const getAllExercises = async (req, res) => {
+  const { id } = req.params
+  
     try {
-        const exercises = await Gym.find({});
+      // const exercises = await Gym.find({"exercises.name": "squatos"});  
+       const exercises = await Gym.find({});
         return res.status(200).json({
             success: true,
             count: exercises.length,
@@ -71,7 +76,7 @@ export const getSingleExercise = async(req, res) => {
 }
 
 
-// UPDATE EXERCISE
+// UPDATE EXERCISE 👌
 export const updateExercise = async (req, res) => {
     
     try {
@@ -92,7 +97,7 @@ export const updateExercise = async (req, res) => {
     }
 };
 
-// DELETE TEMPLATE
+// DELETE TEMPLATE 👌
 
 export const deleteTemplate = async (req, res) => {
     try {
@@ -108,7 +113,7 @@ export const deleteTemplate = async (req, res) => {
      }
 }
 
-// REMOVE EXERCISE
+// REMOVE EXERCISE 👌
 
 export const removeExercise = async (req, res) => {
     try {
@@ -125,6 +130,18 @@ export const removeExercise = async (req, res) => {
     } catch (error) {
       console.log(error);
       res.status(500).json({ success: false, msg: "There is an error" });
+    }
+  }
+
+  // DELETE ALL 👌
+  
+  export const deleteAll = async (req,res) =>{
+    try {
+      const all = req.body
+      const removeAll = await Gym.deleteMany({});
+      res.status(200).json({success: true, msg: "Succesfull Deletion"})
+    } catch (error) {
+      res.status(500).json({success: false, msg: "There is an error"})
     }
   }
   
