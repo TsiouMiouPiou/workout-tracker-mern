@@ -21,14 +21,17 @@ const DeleteExercise = () => {
       .then((res) => {
         const updatedExercises = res.data.data.exercises;
         setExercises(updatedExercises);
+        console.log(exerciseName);
+        
         if (updatedExercises.length === 0) {
           navigate("/");
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         alert("There is an error");
       });
+
   };
   return (
     <>
@@ -41,7 +44,7 @@ const DeleteExercise = () => {
         ) : (
           exercises.map((ex, index) => (
             <div className="text-2xl flex justify-between mt-10" key={index}>
-              {ex}
+              {ex.name}
               <button onClick={() => handleSaveRemovedExercises(ex)}>
                 <IoIosRemoveCircle className="text-red-500 text-3xl cursor-pointer" />
               </button>

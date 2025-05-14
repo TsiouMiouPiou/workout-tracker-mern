@@ -40,6 +40,16 @@ const CreateExercise = () => {
       })
       .catch((error) => {
         alert("Fill all forms", error);
+        console.error("Full axios error:", error);
+        if (error.response) {
+          console.log("Response Data", error.response.data);
+          console.log("Status code", error.response.status);
+          console.log("Headers", error.response.headers);
+        } else if (error.request) {
+          console.log("No response received, Request was:", error.request);
+        } else {
+          console.log("Error setting up the request", error.message);
+        }
       });
   };
 

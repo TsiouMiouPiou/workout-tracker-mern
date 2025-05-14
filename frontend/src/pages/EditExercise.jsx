@@ -30,7 +30,7 @@ const EditExercise = () => {
   // Handle editing exercise
   const handleEditClick = (index) => {
     setCurrent(index);
-    setNewExercise(exercises[index]);
+    setNewExercise(exercises[index].name);
   };
   // Handle template change
   const handleTemplateSave = () => {
@@ -39,7 +39,7 @@ const EditExercise = () => {
 
     const updatedData = {
       template: newTemplate,
-      exercises, // Retain the exercises as they are
+      exercises, 
     };
     axios
       .put(`http://localhost:5000/exercises/${id}`, updatedData)
@@ -57,7 +57,7 @@ const EditExercise = () => {
     if (current === null || !newExercise.trim()) return;
 
     const updatedExercises = [...exercises];
-    updatedExercises[current] = newExercise;
+    updatedExercises[current] = {...updatedExercises[current], name: newExercise}
 
     const newData = {
       template,
@@ -108,7 +108,7 @@ const EditExercise = () => {
               className="flex justify-between items-center border-b py-2"
             >
               <span className="text-xl">
-                {index + 1}. {ex}
+                {index + 1}. {ex.name}
               </span>
               <button
                 className="bg-yellow-400 hover:bg-yellow-500 px-3 py-1 rounded-xl"

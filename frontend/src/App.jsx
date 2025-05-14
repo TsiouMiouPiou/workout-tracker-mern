@@ -17,7 +17,7 @@ function App() {
       <Route path="/add/:id" element={<AddExercise />} />
       <Route path="/delete/:id" element={<DeleteExercise />} />
       <Route path="/deleteAll/:id" element={<DeleteTemplate />} />
-      <Route path="/startWorkout/:id" element={<StartWorkout/>}/>
+      <Route path="/startWorkout/:id/" element={<StartWorkout/>}/>
     </Routes>
   );
 }

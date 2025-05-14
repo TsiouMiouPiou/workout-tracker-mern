@@ -8,12 +8,14 @@ const AddExercise = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [exercises, setExercises] = useState([]);
+  
   const [template, setTemplate] = useState("");
   const [newExercise, setNewExercise] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/exercises/${id}`).then((res) => {
-      setTemplate(res.data.data.template);
+    axios.get(`http://localhost:5000/exercises/${id}`)
+          .then((res) => {
+          setTemplate(res.data.data.template);
     });
   });
 
@@ -22,7 +24,8 @@ const AddExercise = () => {
       alert("No empty values are accepted");
       return;
     }
-    setExercises((prev) => [...prev, newExercise]);
+    const exerciseObj = { name: newExercise};
+    setExercises((prev) => [...prev, exerciseObj]);
     setNewExercise("");
   };
 
@@ -47,15 +50,15 @@ const AddExercise = () => {
       .catch((error) => {
         alert("There is an error");
         console.error("Full axios error:", error);
-        // if (error.response) {
-        //   console.log("Response Data", error.response.data);
-        //   console.log("Status code", error.response.status);
-        //   console.log("Headers", error.response.headers);
-        // } else if (error.request) {
-        //   console.log("No response received, Request was:", error.request);
-        // } else {
-        //   console.log("Error setting up the request", error.message);
-        // }
+        if (error.response) {
+          console.log("Response Data", error.response.data);
+          console.log("Status code", error.response.status);
+          console.log("Headers", error.response.headers);
+        } else if (error.request) {
+          console.log("No response received, Request was:", error.request);
+        } else {
+          console.log("Error setting up the request", error.message);
+        }
       });
   };
   return (
@@ -86,7 +89,7 @@ const AddExercise = () => {
         <div className="mt-10 text-2xl  ">
           {exercises.map((ex, index) => (
             <div className="flex justify-between" key={index}>
-              {ex}{" "}
+                {ex.name}
               <button onClick={() => handleRemove(ex)}>
                 <IoIosRemoveCircle className="text-red-500 cursor-pointer" />
               </button>
