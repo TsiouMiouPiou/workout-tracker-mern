@@ -32,7 +32,7 @@ const CreateExercise = () => {
       .post("http://localhost:5000/exercises", data) // axios takes 2 parameters: 1) the endpoint that I send the request, 2) the body of the request - what I want to send to the server
       .then((res) => {
         setTemplate(res.data.data.template);
-        setExercises(res.data.data.exercises);
+        setExercises(res.data.data.exercises); // to return only the array and not the entire Gym object
         console.log(res.data);
       })
       .then(() => {

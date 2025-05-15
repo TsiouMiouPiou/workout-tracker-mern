@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import BackButton from "./components/BackButton";
 
 const StartWorkout = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { id } = useParams(); // only id
   const [exercises, setExercises] = useState([]);
   const [template, setTemplate] = useState("");
-
   const [kg, setKg] = useState("");
   const [reps, setReps] = useState("");
 
@@ -24,21 +24,16 @@ const StartWorkout = () => {
   }, [id]);
 
   const handleSet = (exerciseIndex) => {
-    const currentSets = exercises[exerciseIndex].sets;
-    const newSet = {
-      number: currentSets.length + 1,
-      kg: Number(kg),
-      reps: Number(reps),
-    };
-
     if (!kg || !reps) return alert("Kg and Reps cannot be empty or 0");
 
     const updatedExercises = exercises.map((exercise, index) => {
       if (index === exerciseIndex) {
-        return {
-          ...exercise,
-          sets: [...exercise.sets, newSet],
+        const newSet = {
+          number: exercise.sets.length + 1,
+          kg: Number(kg),
+          reps: Number(reps),
         };
+        return { ...exercise, sets: [...exercise.sets, newSet] };
       }
       return exercise;
     });
@@ -51,17 +46,20 @@ const StartWorkout = () => {
   const handleFinishWorkout = async () => {
     try {
       for (const exercise of exercises) {
-        for (const set of exercise.sets) {
-          await axios.post(`http://localhost:5000/exercises/${id}/${exercise._id}/sets`, {
-            number: set.number,
-            kg: set.kg,
-            reps: set.reps
-          });
-        }
+        await axios.post(
+          `http://localhost:5000/exercises/${id}/${exercise._id}/sets`,
+          [...exercise.sets]
+        );
       }
-  
-      alert("Workout Saved!!!");
-      navigate('/');
+
+      const clearedExercises = exercises.map((exercise) => ({
+        ...exercise,
+        sets: [],
+      }));
+      setExercises(clearedExercises);
+
+      alert("Workout Saved and cleared!!!");
+      navigate("/");
     } catch (error) {
       console.error("Error saving workout:", error);
       alert("There is an error saving the workout.");
@@ -69,65 +67,72 @@ const StartWorkout = () => {
   };
 
   return (
-    <div className="w-4xl mx-auto mt-8 bg-white rounded-xl">
-      <h1 className="flex justify-center text-3xl pb-5 text-amber-500 font-bold">
-        Workout Template: {template}
-      </h1>
-      {exercises.map((exercise, index) => (
-        <div
-          className="border-0 rounded-2xl p-5 shadow-2xl mt-10 bg-gray-100"
-          key={index}
-        >
-          <h2 className="text-2xl font-semibold pb-6">{exercise.name}</h2>
+    <div className="min-h-screen bg-gray-50">
+      <div className="p-4">
+        <BackButton />
+      </div>
+      <div className="max-w-5xl mx-auto mt-8 bg-white rounded-3xl shadow-xl p-8">
+        <h1 className="text-center text-4xl font-bold text-amber-600 mb-10">
+          {template}
+        </h1>
 
-          <ul>
-            {exercise.sets.map((set, i) => (
-              <li
-                className="flex justify-between py-3 mb-4 font-semibold text-xl bg-blue-100 px-2 rounded-2xl"
-                key={i}
+        {exercises.map((exercise, index) => (
+          <div
+            className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg mb-10"
+            key={exercise._id}
+          >
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+              {exercise.name}
+            </h2>
+
+            <ul className="space-y-4">
+              {exercise.sets.map((set, i) => (
+                <li
+                  className="flex justify-between items-center p-4 bg-blue-50 rounded-xl shadow-sm"
+                  key={i}
+                >
+                  <span className="text-blue-600 font-semibold">
+                    Set {set.number}
+                  </span>
+                  <span className="font-medium">Kg: {set.kg}</span>
+                  <span className="font-medium">Reps: {set.reps}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex gap-4 mt-6">
+              <input
+                type="number"
+                value={kg}
+                onChange={(e) => setKg(e.target.value)}
+                placeholder="Kg"
+                className="w-24 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none"
+              />
+              <input
+                type="number"
+                value={reps}
+                onChange={(e) => setReps(e.target.value)}
+                placeholder="Reps"
+                className="w-24 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none"
+              />
+              <button
+                onClick={() => handleSet(index)}
+                className="bg-green-500 text-white font-semibold px-6 py-2 rounded-lg hover:bg-green-600 transition"
               >
-                <p className="text-blue-500">Sets: {set.number}</p>
-                <p>Kg: {set.kg}</p>
-                <p>Reps: {set.reps}</p>
-              </li>
-            ))}
-          </ul>
+                + Add Set
+              </button>
+            </div>
+          </div>
+        ))}
 
-          <div className="flex justify-between pb-5 text-xl">
-            <input type="number" readOnly className="px-2 w-20" />
-            <input
-              type="number"
-              value={kg}
-              onChange={(e) => setKg(e.target.value)}
-              placeholder="Kg"
-              className="border px-2 rounded w-20 border-gray-300"
-            />
-            <input
-              type="number"
-              value={reps}
-              onChange={(e) => setReps(e.target.value)}
-              placeholder="Reps"
-              className="border px-2 rounded w-20 border-gray-300 text-xl p-1"
-            />
-          </div>
-          <div className="flex justify-center">
-            <button
-              onClick={() => handleSet(index)}
-              className="cursor-pointer text-white text-xl font-semibold border-2 bg-green-500 rounded-2xl px-6 py-1"
-              title="Add Set"
-            >
-              + Add Set
-            </button>
-          </div>
+        <div className="flex justify-center mt-12">
+          <button
+            className="bg-red-500 hover:bg-red-600 text-white font-bold text-xl px-8 py-3 rounded-2xl shadow-lg transition"
+            onClick={handleFinishWorkout}
+          >
+            Finish Workout
+          </button>
         </div>
-      ))}
-      <div className="mt-15 flex justify-center">
-        <button
-          className="text-2xl text-amber-50 border-2 rounded-2xl px-5 py-1 bg-red-500 cursor-pointer"
-          onClick={handleFinishWorkout}
-        >
-          Finish Workout
-        </button>
       </div>
     </div>
   );

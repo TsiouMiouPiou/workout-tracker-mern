@@ -7,7 +7,7 @@ import { createExercise,
          addExercise, 
          removeExercise, 
          deleteAll, 
-         saveWorkout,
+         replaceExerciseSets,
          getSetForSingleExercise
           } from '../controllers/gym.controller.js';
 
@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post('/', createExercise);
 router.post('/:id', addExercise);
-router.post('/:id/:exerciseId/sets', saveWorkout)
+router.put('/:id/:exerciseId/sets', replaceExerciseSets)
 
 router.get('/', getAllExercises);
 router.get('/:id', getSingleExercise)

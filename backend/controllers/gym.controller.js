@@ -18,39 +18,31 @@ export const createExercise = async (req, res) => {
 };
 
 // SAVE SETS
-export const saveWorkout = async (req, res) => {
+export const replaceExerciseSets = async (req, res) => {
   const { id, exerciseId } = req.params;
-  const { kg, reps } = req.body;
+  const newSets = req.body; // Expecting an array of sets [{ number, kg, reps }, ...]
 
   try {
-    const gym = await Gym.findById(id); // the initial id (template ID)
+    const gym = await Gym.findById(id);
     if (!gym)
       return res.status(404).json({ success: false, msg: "Gym not found" });
 
-    const exercise = gym.exercises.id(exerciseId); // Exercise ID
+    const exercise = gym.exercises.id(exerciseId);
     if (!exercise)
-      return res
-        .status(404)
-        .json({ success: false, msg: "Exercise not found" });
+      return res.status(404).json({ success: false, msg: "Exercise not found" });
 
-    const newSet = {
-      number: exercise.sets.length + 1,
-      kg,
-      reps,
-    };
+    // Replace the entire sets array safely
+    exercise.sets = newSets;
 
-    exercise.sets.push(newSet);
     await gym.save();
 
-    res.status(200).json({ success: true, msg: "Set added", exercise });
+    res.status(200).json({ success: true, msg: "Sets replaced successfully", exercise });
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, msg: "Server error", error: error.message });
+    res.status(500).json({ success: false, msg: "Server error", error: error.message });
   }
 };
 
-//
+
 
 // ADD EXERCISES 👌
 export const addExercise = async (req, res) => {
@@ -80,10 +72,8 @@ export const addExercise = async (req, res) => {
 
 // GET ALL EXERCISES 👌
 export const getAllExercises = async (req, res) => {
-  // I want to enter the sets array from exercises
 
   try {
-    // const exercises = await Gym.find({"exercises.name": "squatos"});
     const exercises = await Gym.find({});
     return res.status(200).json({
       success: true,
