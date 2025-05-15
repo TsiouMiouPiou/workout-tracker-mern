@@ -4,7 +4,7 @@ import Gym from "../models/gym.model.js";
 export const createExercise = async (req, res) => {
   const all = req.body;
 
-  if (!all.template || !all.exercises || !all.exercises.length === 0) {
+  if (!all.template || !all.exercises || all.exercises.length === 0) {
     return res.status(400).json("Send all required fields");
   }
   const newExercise = new Gym(all);
@@ -13,7 +13,7 @@ export const createExercise = async (req, res) => {
     res.status(200).json({ success: true, data: newExercise });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, msg: "Generic Error" });
+    res.status(500).json({ success: false, msg: "Server Error from: createExercise", error });
   }
 };
 

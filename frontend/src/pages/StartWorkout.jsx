@@ -51,11 +51,15 @@ const StartWorkout = () => {
   const handleFinishWorkout = async () => {
     try {
       for (const exercise of exercises) {
-        await axios.post(`http://localhost:5000/exercises/${id}/${exercise._id}/sets`, {
-          sets: exercise.sets,
-        });
+        for (const set of exercise.sets) {
+          await axios.post(`http://localhost:5000/exercises/${id}/${exercise._id}/sets`, {
+            number: set.number,
+            kg: set.kg,
+            reps: set.reps
+          });
+        }
       }
-
+  
       alert("Workout Saved!!!");
       navigate('/');
     } catch (error) {

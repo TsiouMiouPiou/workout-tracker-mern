@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BackButton from "./components/BackButton";
@@ -18,7 +17,8 @@ const CreateExercise = () => {
       alert("Select a template");
       return;
     }
-    setExercises((prev) => [...prev, exerciseName]);
+
+    setExercises((prev) => [...prev, {name: exerciseName}]);
     setExercisesName("");
   };
 
@@ -31,8 +31,8 @@ const CreateExercise = () => {
     axios
       .post("http://localhost:5000/exercises", data) // axios takes 2 parameters: 1) the endpoint that I send the request, 2) the body of the request - what I want to send to the server
       .then((res) => {
-        setTemplate(res.data.data);
-        setExercises(res.data.data);
+        setTemplate(res.data.data.template);
+        setExercises(res.data.data.exercises);
         console.log(res.data);
       })
       .then(() => {
@@ -90,7 +90,7 @@ const CreateExercise = () => {
 
         <ul className="mt-8 list-disc list-inside space-y-2 text-lg">
           {exercises.map((ex, index) => (
-            <li key={index}>{ex}</li>
+            <li key={index}>{ex.name}</li>
           ))}
         </ul>
       </div>
