@@ -58,7 +58,7 @@ const StartWorkout = () => {
       }));
       setExercises(clearedExercises);
 
-      alert("Workout Saved and cleared!!!");
+      alert("Workout Succesfully Saved!!!");
       navigate("/");
     } catch (error) {
       console.error("Error saving workout:", error);
@@ -73,7 +73,7 @@ const StartWorkout = () => {
       </div>
       <div className="max-w-5xl mx-auto mt-8 bg-white rounded-3xl shadow-xl p-8">
         <h1 className="text-center text-4xl font-bold text-amber-600 mb-10">
-          {template}
+          Start Workout '{template} Template'
         </h1>
 
         {exercises.map((exercise, index) => (

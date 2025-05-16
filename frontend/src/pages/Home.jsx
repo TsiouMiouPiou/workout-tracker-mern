@@ -1,6 +1,5 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { HiArrowNarrowDown } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
@@ -29,6 +28,11 @@ const Home = () => {
         <Link to={"/create"}>
           <button className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-full text-xl hover:bg-blue-600 transition cursor-pointer">
             Create New Template
+          </button>
+        </Link>
+        <Link to={"/workoutHistory"}>
+          <button className="mt-6 ml-10 bg-green-500 text-white px-6 py-3 rounded-full text-xl hover:bg-blue-600 transition cursor-pointer">
+            History
           </button>
         </Link>
       </div>

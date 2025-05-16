@@ -1,71 +1,27 @@
-// import mongoose from "mongoose";
-
-// const gymSchema = mongoose.Schema(
-//   {
-//     template: {
-//       type: String,
-//       required: true,
-//     },
-//     exercises: [
-//       {
-//        name: {type: String, required: true},
-//         sets: [
-//           {
-//             number: {type: Number, required: false},
-//             kg: { type: Number, required: false },
-//             reps: { type: Number, required: false },
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     timestamps: true,
-//   }
-// );
-
-// const Gym = mongoose.model("Gym", gymSchema);
-
-// export default Gym;
-
 import mongoose from "mongoose";
 
-const gymSchema = mongoose.Schema(
-  {
-    template: { type: String, required: true },
-    exercises: [
-      {
-        name: { type: String, required: true },
-        sets: [
-          {
-            number: { type: Number },
-            kg: { type: Number },
-            reps: { type: Number },
-          },
-        ],
-      },
-    ],
-    workouts: [
-      {
-        date: { type: Date, default: Date.now },
-        exercises: [
-          {
-            name: { type: String, required: true },
-            sets: [
-              {
-                number: { type: Number },
-                kg: { type: Number },
-                reps: { type: Number },
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  { timestamps: true }
-);
+const SetSchema = new mongoose.Schema({
+  number: Number,
+  kg: Number,
+  reps: Number,
+});
 
-const Gym = mongoose.model("Gym", gymSchema);
+const ExerciseSchema = new mongoose.Schema({
+  name: String,
+  sets: [SetSchema],
+});
+
+const GymSchema = new mongoose.Schema({
+  template: String,
+  exercises: [ExerciseSchema],
+  workouts: [
+    {
+      date: { type: Date, default: Date.now },
+      exercises: [ExerciseSchema],
+    },
+  ],
+});
+
+const Gym = mongoose.model("Gym", GymSchema);
 
 export default Gym;

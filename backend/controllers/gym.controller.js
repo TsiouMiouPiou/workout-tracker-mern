@@ -13,7 +13,13 @@ export const createExercise = async (req, res) => {
     res.status(200).json({ success: true, data: newExercise });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, msg: "Server Error from: createExercise", error });
+    res
+      .status(500)
+      .json({
+        success: false,
+        msg: "Server Error from: createExercise",
+        error,
+      });
   }
 };
 
@@ -29,20 +35,55 @@ export const replaceExerciseSets = async (req, res) => {
 
     const exercise = gym.exercises.id(exerciseId);
     if (!exercise)
-      return res.status(404).json({ success: false, msg: "Exercise not found" });
+      return res
+        .status(404)
+        .json({ success: false, msg: "Exercise not found" });
 
     // Replace the entire sets array safely
     exercise.sets = newSets;
 
     await gym.save();
 
-    res.status(200).json({ success: true, msg: "Sets replaced successfully", exercise });
+    res
+      .status(200)
+      .json({ success: true, msg: "Sets replaced successfully", exercise });
   } catch (error) {
-    res.status(500).json({ success: false, msg: "Server error", error: error.message });
+    res
+      .status(500)
+      .json({ success: false, msg: "Server error", error: error.message });
   }
 };
 
+// SAVE WORKOUT
+export const saveWholeWorkout = async (req, res) => {
+  const { id } = req.params;
+  const exercisesFromClient = req.body; // expecting [{ name, sets: [...] }, ...]
 
+  try {
+    const gym = await Gym.findById(id);
+    if (!gym)
+      return res.status(404).json({ success: false, msg: "Gym not found" });
+
+    // Save as a new workout in the workouts array
+    gym.workouts.push({
+      exercises: exercisesFromClient,
+    });
+
+    await gym.save();
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        msg: "Workout saved to history!",
+        workouts: gym.workouts,
+      });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, msg: "Server error", error: error.message });
+  }
+};
 
 // ADD EXERCISES 👌
 export const addExercise = async (req, res) => {
@@ -72,7 +113,6 @@ export const addExercise = async (req, res) => {
 
 // GET ALL EXERCISES 👌
 export const getAllExercises = async (req, res) => {
-
   try {
     const exercises = await Gym.find({});
     return res.status(200).json({
@@ -86,20 +126,65 @@ export const getAllExercises = async (req, res) => {
   }
 };
 
+// GET ALL WORKOUTS
+export const getWorkoutHistory = async (req, res) => {
+  try {
+    const gym = await Gym.find({});
+    const returnworkouts = gym.workouts.map(workout => ({
+      ...workout
+    }))
+    res.status(200).json({
+      success: true, 
+      msg: "Succesfull Workout Retrieval",
+      AllWorkouts: returnworkouts,
+    })
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .json({
+        success: false,
+        msg: "Server error from getWorkoutHistory", error,
+        
+      });
+  }
+};
+// GET SINGLE WORKOUT
+export const getSingleWorkout = async (req, res) => {
+  try {
+    const { id } = req.params; // gym id needed
+    const template = req.body;
+    const gym = await Gym.findById(id);
+    if (!gym) {
+      return res.status(404).json({ success: false, msg: "Gym not found" });
+    }
+
+    res.status(200).json({
+      success: true,
+      Template: gym.template,
+      Data: { Workout: gym.workouts },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      msg: "Server error from getWorkoutHistory",
+      error,
+    });
+  }
+};
+
 // GET SINGLE EXERCISE
 export const getSingleExercise = async (req, res) => {
   const { id } = req.params;
   // const singleExercise = req.body;
   try {
     const exercise = await Gym.findById(id);
-    res
-      .status(200)
-      .json({
-        success: true,
-        msg: "Template ID",
-        TemplateId: id,
-        data: exercise,
-      });
+    res.status(200).json({
+      success: true,
+      msg: "Template ID",
+      TemplateId: id,
+      data: exercise,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, msg: "There is an error!" });
@@ -117,8 +202,8 @@ export const getSetForSingleExercise = async (req, res) => {
     res.status(200).json({
       success: true,
       msg: "Bellow is your single exID with its Name and Sets",
-      ExerciseId: exId, // Contains the ExID and the name of the ex with sets
-      OnlySetsArray: exId.sets // Contains only the sets for this one exercise
+      ExerciseId: exId, // Contains the ExID and the name of the exercise with sets
+      OnlySetsArray: exId.sets, // Contains only the sets for this one exercise
     });
   } catch (error) {}
 };

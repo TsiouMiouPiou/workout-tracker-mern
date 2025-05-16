@@ -8,14 +8,20 @@ import { createExercise,
          removeExercise, 
          deleteAll, 
          replaceExerciseSets,
-         getSetForSingleExercise
+         getSetForSingleExercise,
+         saveWholeWorkout,
+         getWorkoutHistory,
+         getSingleWorkout
           } from '../controllers/gym.controller.js';
 
 const router = express.Router();
 
 router.post('/', createExercise);
 router.post('/:id', addExercise);
-router.put('/:id/:exerciseId/sets', replaceExerciseSets)
+router.post('/:id/:exerciseId/sets', replaceExerciseSets)
+router.post('/:id/workouts', saveWholeWorkout)
+router.get('/workouts', getWorkoutHistory)
+router.get('/:id/workouts', getSingleWorkout)
 
 router.get('/', getAllExercises);
 router.get('/:id', getSingleExercise)
