@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { FcDeleteDatabase } from "react-icons/fc";
+import { FiMinusCircle } from "react-icons/fi";
+import { FaTrashCan } from "react-icons/fa6";
 
 const Home = () => {
   const [exercises, setExercises] = useState([]);
@@ -13,6 +15,9 @@ const Home = () => {
       .get("http://localhost:5000/exercises")
       .then((res) => {
         setExercises(res.data.data);
+        console.log("Logging all Gym Schema", res.data.data);
+        
+        
       })
       .catch((error) => {
         console.log(error);
@@ -49,9 +54,7 @@ const Home = () => {
                 {exercise.template}
               </h1>
               <div className="flex justify-center mb-4">
-                <Link to={`deleteAll/${exercise._id}`} className="text-4xl">
-                  <FcDeleteDatabase />
-                </Link>
+                
               </div>
               <ol className="text-lg text-gray-700 my-4 max-h-48 overflow-y-auto pr-3">
                 {exercise.exercises.map((ex, index) => (
@@ -70,21 +73,24 @@ const Home = () => {
                 ))}
               </ol>
 
-              <div className="flex justify-center gap-6 text-3xl pt-6">
+              <div className="flex justify-center gap-6 text-2xl pt-6 ">
                 <Link to={`/edit/${exercise._id}`}>
-                  <MdEdit className="text-gray-500 hover:text-gray-700 transition" />
+                  <MdEdit className="text-blue-400 hover:text-gray-700 transition" />
                 </Link>
                 <Link to={`/add/${exercise._id}`}>
                   <IoMdAddCircleOutline className="text-blue-400 hover:text-blue-600 transition" />
                 </Link>
                 <Link to={`/delete/${exercise._id}`}>
-                  <MdDeleteForever className="text-red-400 hover:text-red-600 transition" />
+                  <FiMinusCircle  className="text-blue-400 hover:text-red-600 transition " />
+                </Link>
+                <Link to={`deleteAll/${exercise._id}`} className=" text-blue-400">
+                  <FaTrashCan />
                 </Link>
               </div>
 
               <div className="flex justify-center mt-5">
                 <Link to={`/startWorkout/${exercise._id}`}>
-                  <button className="text-1xl rounded-2xl px-5 py-1 cursor-pointer bg-blue-500 hover:scale-110 transition-transform duration-300">
+                  <button className="text-1xl text-amber-50 rounded-2xl px-5 py-1 cursor-pointer bg-blue-500 hover:scale-110 transition-transform duration-300">
                     Start Workout
                   </button>
                 </Link>

@@ -20,6 +20,7 @@ router.post('/', createExercise);
 router.post('/:id', addExercise);
 router.post('/:id/:exerciseId/sets', replaceExerciseSets)
 router.post('/:id/workouts', saveWholeWorkout)
+
 router.get('/workouts', getWorkoutHistory)
 router.get('/:id/workouts', getSingleWorkout)
 

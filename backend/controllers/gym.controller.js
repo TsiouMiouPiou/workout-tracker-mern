@@ -57,8 +57,7 @@ export const replaceExerciseSets = async (req, res) => {
 // SAVE WORKOUT
 export const saveWholeWorkout = async (req, res) => {
   const { id } = req.params;
-  const exercisesFromClient = req.body; // expecting [{ name, sets: [...] }, ...]
-
+  const {template, exercises} = req.body; // expecting [{ name, sets: [...] }, ...]
   try {
     const gym = await Gym.findById(id);
     if (!gym)
@@ -66,7 +65,8 @@ export const saveWholeWorkout = async (req, res) => {
 
     // Save as a new workout in the workouts array
     gym.workouts.push({
-      exercises: exercisesFromClient,
+      template,
+      exercises,
     });
 
     await gym.save();
@@ -126,34 +126,38 @@ export const getAllExercises = async (req, res) => {
   }
 };
 
-// GET ALL WORKOUTS
+// GET ALL WORKOUTS 
 export const getWorkoutHistory = async (req, res) => {
   try {
-    const gym = await Gym.find({});
-    const returnworkouts = gym.workouts.map(workout => ({
-      ...workout
-    }))
+    const gyms = await Gym.find({});
+
+    // Flatten all workouts from each gym into one array
+    const allWorkouts = gyms.flatMap(gym => 
+      gym.workouts.map(workout => ({
+        ...workout.toObject(),
+        gymId: gym._id,
+        Template: gym.template
+      }))
+    );
     res.status(200).json({
       success: true, 
-      msg: "Succesfull Workout Retrieval",
-      AllWorkouts: returnworkouts,
-    })
+      msg: "Successful Workout Retrieval",
+      workoutHistory: allWorkouts
+    });
   } catch (error) {
-    console.error(error)
-    res
-      .status(500)
-      .json({
-        success: false,
-        msg: "Server error from getWorkoutHistory", error,
-        
-      });
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      msg: "Server error from getWorkoutHistory",
+      error: error.message
+    });
   }
 };
-// GET SINGLE WORKOUT
+
+// GET SINGLE WORKOUT 👌
 export const getSingleWorkout = async (req, res) => {
   try {
     const { id } = req.params; // gym id needed
-    const template = req.body;
     const gym = await Gym.findById(id);
     if (!gym) {
       return res.status(404).json({ success: false, msg: "Gym not found" });

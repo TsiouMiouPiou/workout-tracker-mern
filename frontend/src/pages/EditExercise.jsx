@@ -39,13 +39,12 @@ const EditExercise = () => {
 
     const updatedData = {
       template: newTemplate,
-      exercises, 
+      exercises,
     };
     axios
       .put(`http://localhost:5000/exercises/${id}`, updatedData)
       .then(() => {
         alert("Exercise has been successfully saved");
-       
       })
       .catch((error) => {
         console.log(error);
@@ -57,7 +56,10 @@ const EditExercise = () => {
     if (current === null || !newExercise.trim()) return;
 
     const updatedExercises = [...exercises];
-    updatedExercises[current] = {...updatedExercises[current], name: newExercise}
+    updatedExercises[current] = {
+      ...updatedExercises[current],
+      name: newExercise,
+    };
 
     const newData = {
       template,
@@ -68,7 +70,7 @@ const EditExercise = () => {
       .put(`http://localhost:5000/exercises/${id}`, newData)
       .then(() => {
         alert("Exercise has been successfully saved");
-       navigate('/')
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
