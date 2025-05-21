@@ -6,7 +6,7 @@ export default {
       fontFamily:{
         sans: ['Inter', 'sans-serif'],
         body: ['Roboto', 'sans-serif'],
-        fancy: ['"Great Vibes"', 'cursive'],
+        fancy: ['Great Vibes', 'cursive'],
       }
     },
   },
