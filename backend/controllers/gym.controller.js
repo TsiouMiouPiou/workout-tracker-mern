@@ -24,7 +24,7 @@ export const createExercise = async (req, res) => {
 };
 
 // SAVE SETS
-export const replaceExerciseSets = async (req, res) => {
+export const saveSets = async (req, res) => {
   const { id, exerciseId } = req.params;
   const newSets = req.body; // Expecting an array of sets [{ number, kg, reps }, ...]
 
@@ -33,26 +33,36 @@ export const replaceExerciseSets = async (req, res) => {
     if (!gym)
       return res.status(404).json({ success: false, msg: "Gym not found" });
 
-    const exercise = gym.exercises.id(exerciseId);
+    const exercise = gym.exercises.id(exerciseId); // the exercise id
     if (!exercise)
-      return res
-        .status(404)
-        .json({ success: false, msg: "Exercise not found" });
+      return res.status(404).json({ success: false, msg: "Exercise not found" });
 
     // Replace the entire sets array safely
     exercise.sets = newSets;
+    
 
     await gym.save();
 
-    res
-      .status(200)
-      .json({ success: true, msg: "Sets replaced successfully", exercise });
+    res.status(200).json({ success: true, msg: "Sets replaced successfully", exercise });
   } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, msg: "Server error", error: error.message });
+    res.status(500).json({ success: false, msg: "Server error", error: error.message });
   }
 };
+
+// CLEAR SETS
+
+export const clearSets = async(req, res) => {
+  const { id } = req.params;
+  try {
+      const gym = await Gym.findById(id)
+      gym.exercises.map((ex) =>{
+        ex.sets = []
+      })
+      res.status(200).json({success: true, msg: "Succesfull Sets Update"})
+  } catch (error) {
+    res.status(500).json({success:false, msg: "Server Error"});
+  }
+}
 
 // SAVE WORKOUT
 export const saveWholeWorkout = async (req, res) => {
@@ -200,13 +210,14 @@ export const getSetForSingleExercise = async (req, res) => {
   const { id, exerciseId } = req.params;
 
   try {
-    const gymTemplate = await Gym.findById(id);
-    const exId = gymTemplate.exercises.id(exerciseId);
+    const gymTemplate = await Gym.findById(id); // get the template id
+    const exId = gymTemplate.exercises.id(exerciseId); // extract the id for each exercise
 
     res.status(200).json({
       success: true,
       msg: "Bellow is your single exID with its Name and Sets",
       ExerciseId: exId, // Contains the ExID and the name of the exercise with sets
+      Exercise: exId.name,
       OnlySetsArray: exId.sets, // Contains only the sets for this one exercise
     });
   } catch (error) {}

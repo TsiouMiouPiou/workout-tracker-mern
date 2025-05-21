@@ -10,7 +10,7 @@ const StartWorkout = () => {
   const [template, setTemplate] = useState("");
   const [kg, setKg] = useState("");
   const [reps, setReps] = useState("");
-
+  
   useEffect(() => {
     axios
       .get(`http://localhost:5000/exercises/${id}`)
@@ -43,28 +43,34 @@ const StartWorkout = () => {
     setReps("");
   };
 
-  const handleFinishWorkout = async () => {
-    try {
-      for (const exercise of exercises) {
-        await axios.post(
-          `http://localhost:5000/exercises/${id}/${exercise._id}/sets`,
-          [...exercise.sets]
-        );
-      }
+const handleFinishWorkout = async () => {
+  try {
+    // 1. Save the Workout 
+    await axios.post(`http://localhost:5000/exercises/${id}/workouts`, {
+      template,
+      exercises,
+    });
 
-      const clearedExercises = exercises.map((exercise) => ({
-        ...exercise,
-        sets: [],
-      }));
-      setExercises(clearedExercises);
+    // 2. Clear the sets from the DB
+  await axios.put(`http://localhost:5000/exercises/${id}/exercises/clear-sets`);
+    // Clear all sets in the frontend
+    const clearedExercises = exercises.map((ex) => ({
+      ...ex,
+      sets: [],
+    }));
+    setExercises(clearedExercises);
 
-      alert("Workout Succesfully Saved!!!");
-      navigate("/");
-    } catch (error) {
-      console.error("Error saving workout:", error);
-      alert("There is an error saving the workout.");
-    }
-  };
+    setKg("");   // Also clear inputs just in case
+    setReps("");
+
+    alert("Workout successfully saved!");
+    navigate("/"); // Go back to home or refresh
+  } catch (error) {
+    console.error("Error saving workout:", error);
+    alert("Failed to save workout.");
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-50">

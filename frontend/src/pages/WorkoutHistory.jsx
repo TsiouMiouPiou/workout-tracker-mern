@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const WorkoutHistory = () => {
@@ -79,4 +79,5 @@ const WorkoutHistory = () => {
 
 export default WorkoutHistory;
 
-// workout => exercises
+// When I delete a template, the workout history is also deleted 
+// Which is something I dont want to happen.

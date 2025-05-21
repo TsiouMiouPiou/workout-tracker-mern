@@ -12,7 +12,7 @@ const ExerciseSchema = new mongoose.Schema({
 });
 
 const GymSchema = new mongoose.Schema({
-  
+  template: String,
   exercises: [ExerciseSchema],
   workouts: [
     {

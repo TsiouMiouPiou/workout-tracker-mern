@@ -1,9 +1,8 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { MdDeleteForever, MdEdit } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { FcDeleteDatabase } from "react-icons/fc";
 import { FiMinusCircle } from "react-icons/fi";
 import { FaTrashCan } from "react-icons/fa6";
 

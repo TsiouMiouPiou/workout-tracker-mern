@@ -7,19 +7,21 @@ import { createExercise,
          addExercise, 
          removeExercise, 
          deleteAll, 
-         replaceExerciseSets,
+         saveSets,
          getSetForSingleExercise,
          saveWholeWorkout,
          getWorkoutHistory,
-         getSingleWorkout
-          } from '../controllers/gym.controller.js';
+         getSingleWorkout,
+         clearSets
+                      } from '../controllers/gym.controller.js';
 
 const router = express.Router();
 
 router.post('/', createExercise);
 router.post('/:id', addExercise);
-router.post('/:id/:exerciseId/sets', replaceExerciseSets)
+router.post('/:id/:exerciseId/sets', saveSets)
 router.post('/:id/workouts', saveWholeWorkout)
+
 
 router.get('/workouts', getWorkoutHistory)
 router.get('/:id/workouts', getSingleWorkout)
@@ -29,6 +31,7 @@ router.get('/:id', getSingleExercise)
 router.get('/:id/:exerciseId/sets', getSetForSingleExercise)
 
 router.put('/:id', updateExercise)
+router.put('/:id/exercises/clear-sets', clearSets)
 router.patch('/:id', removeExercise)
 
 router.delete('/', deleteAll);
