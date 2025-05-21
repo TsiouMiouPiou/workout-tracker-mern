@@ -35,7 +35,7 @@ const Home = () => {
           </button>
         </Link>
         <Link to={"/workoutHistory"}>
-          <button className="mt-6 ml-10 bg-green-500 text-white px-6 py-3 rounded-full text-xl hover:bg-blue-600 transition cursor-pointer">
+          <button className="mt-6 ml-10 bg-green-500 text-white px-6 py-3 rounded-full text-xl hover:bg-green-400 transition cursor-pointer">
             History
           </button>
         </Link>

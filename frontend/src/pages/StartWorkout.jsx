@@ -133,7 +133,7 @@ const handleFinishWorkout = async () => {
 
         <div className="flex justify-center mt-12">
           <button
-            className="bg-red-500 hover:bg-red-600 text-white font-bold text-xl px-8 py-3 rounded-2xl shadow-lg transition"
+            className="bg-red-500 hover:bg-red-600  text-white font-bold text-xl px-8 py-3 rounded-2xl shadow-lg  cursor-pointer"
             onClick={handleFinishWorkout}
           >
             Finish Workout
