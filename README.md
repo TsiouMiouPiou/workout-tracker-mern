@@ -1,6 +1,5 @@
 # 🏋️ Gym MERN Project
 
-## Customize Your Workouts — Your Way, For Free!
 
 Welcome to my personal **Gym Project**, built with the **MERN stack** (MongoDB, Express.js, React, Node.js). I created this app because I wanted full control over my workout routines — no monthly fees, just freedom to create and manage workouts my way.
 
