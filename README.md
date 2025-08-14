@@ -9,27 +9,27 @@ Welcome to my personal **Gym Project**, built with the **MERN stack** (MongoDB, 
 </p>
 
 ## Create New Template
-<p align="">
+<p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%207.png?raw=true" width="400" />
 </p>
 
 ## Add New Exercises
-<p align="">
+<p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%204.png?raw=true" width="400" />
 </p>
 
 ## Delete Exercises
-<p align="">
+<p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%205.png?raw=true" width="400" />
 </p>
 
 ## Start a Workout Session
-<p align="">
+<p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%209.png?raw=true" width="400" />
 </p>
 
 ## See Your Workout History
-<p align="">
+<p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%208.png?raw=true" width="400" />
 </p>
 ---
