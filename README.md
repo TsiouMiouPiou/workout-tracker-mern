@@ -3,6 +3,7 @@
 
 Welcome to my personal **Gym Project**, built with the **MERN stack** (MongoDB, Express.js, React, Node.js). I created this app because I wanted full control over my workout routines — no monthly fees, just freedom to create and manage workouts my way.
 
+## Check out the screenshots to explore the functionality...
 
 <h1 align="center">Home Page</h1>
 <p align="center">
