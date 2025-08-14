@@ -5,27 +5,29 @@ Welcome to my personal **Gym Project**, built with the **MERN stack** (MongoDB, 
 
 
 <h1 align="center">Home Page</h1>
+<h1 align="center">Home </h1>
 
-<p align="center">
+<p align="center" style="fonts🎸">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/740fb47e37a63f55629c08336cdf3bb78a21bdd1/screenshots/image%202.png" width="400" />
 </p>
 
-## Create New Template
+<h1 align="center">Create New Template</h1>
 <p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%207.png?raw=true" width="400" />
 </p>
 
-## Add New Exercises
+<h1 align="center">Add New Exercises</h1>
 <p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%204.png?raw=true" width="400" />
 </p>
 
-## Delete Exercises
+<h1 align="center">Delete Exercises</h1>
 <p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%205.png?raw=true" width="400" />
 </p>
 
 ## Start a Workout Session
+<h1 align="center">Start Workout Session</h1>
 <p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%209.png?raw=true" width="400" />
 </p>
