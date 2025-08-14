@@ -4,9 +4,8 @@
 Welcome to my personal **Gym Project**, built with the **MERN stack** (MongoDB, Express.js, React, Node.js). I created this app because I wanted full control over my workout routines — no monthly fees, just freedom to create and manage workouts my way.
 
 
-<p align="center">
-  <h1>Home Page</h1>
-</p>
+<h1 align="center">Home Page</h1>
+
 <p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/740fb47e37a63f55629c08336cdf3bb78a21bdd1/screenshots/image%202.png" width="400" />
 </p>
