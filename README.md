@@ -3,12 +3,34 @@
 
 Welcome to my personal **Gym Project**, built with the **MERN stack** (MongoDB, Express.js, React, Node.js). I created this app because I wanted full control over my workout routines — no monthly fees, just freedom to create and manage workouts my way.
 
+## Home Page
 <p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/740fb47e37a63f55629c08336cdf3bb78a21bdd1/screenshots/image%202.png" width="400" />
 </p>
 
-<p align="center">
+## Create New Template
+<p align="">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%207.png?raw=true" width="400" />
+</p>
+
+## Add New Exercises
+<p align="">
+  <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%204.png?raw=true" width="400" />
+</p>
+
+## Delete Exercises
+<p align="">
+  <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%205.png?raw=true" width="400" />
+</p>
+
+## Start a Workout Session
+<p align="">
+  <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%209.png?raw=true" width="400" />
+</p>
+
+## See Your Workout History
+<p align="">
+  <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/main/screenshots/image%208.png?raw=true" width="400" />
 </p>
 ---
 
