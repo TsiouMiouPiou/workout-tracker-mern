@@ -5,7 +5,7 @@ Welcome to my personal **Gym Project**, built with the **MERN stack** (MongoDB, 
 
 
 <p align="center">
-  ## Home Page
+  <h1>Home Page</h1>
 </p>
 <p align="center">
   <img src="https://github.com/TsiouMiouPiou/workout-tracker-mern/blob/740fb47e37a63f55629c08336cdf3bb78a21bdd1/screenshots/image%202.png" width="400" />
